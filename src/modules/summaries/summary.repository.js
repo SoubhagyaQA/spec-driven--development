@@ -1,12 +1,12 @@
-/*const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const Expense = require("../expenses/expense.model");
 
-//Monthly Summary
+// Monthly Summary
 const getMonthlySummary = async (userId, month, year) => {
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0, 23, 59, 59);
 
-  const result = await Expense.aggregate([
+  return Expense.aggregate([
     {
       $match: {
         userId: new mongoose.Types.ObjectId(userId),
@@ -41,13 +41,11 @@ const getMonthlySummary = async (userId, month, year) => {
       },
     },
   ]);
-
-  return result[0] || { totalSpend: 0, categories: [] };
 };
 
-//Trends (last 6 months)
+// Trends (last 6 months)
 const getTrends = async (userId) => {
-  const result = await Expense.aggregate([
+  return Expense.aggregate([
     {
       $match: {
         userId: new mongoose.Types.ObjectId(userId),
@@ -78,33 +76,6 @@ const getTrends = async (userId) => {
       },
     },
   ]);
-
-  return result;
-};
-
-module.exports = {
-  getMonthlySummary,
-  getTrends,
-};*/
-
-const repo = require("./summary.repository");
-
-// Monthly Summary
-const getMonthlySummary = async (userId, query) => {
-  const { month, year } = query;
-
-  const result = await repo.getMonthlySummary(
-    userId,
-    Number(month),
-    Number(year)
-  );
-
-  return result[0] || { totalSpend: 0, categories: [] };
-};
-
-// Trends
-const getTrends = async (userId) => {
-  return repo.getTrends(userId);
 };
 
 module.exports = {

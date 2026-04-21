@@ -7,10 +7,10 @@ const router = express.Router();
 // Protect all routes
 router.use(authMiddleware);
 
-router.post("/category-creates",validate(categoryCreate),categoryController.categoryCreate);
-router.get("/getall-category", authMiddleware,validate(categoryGetAll),categoryController.getAllcategory);
-router.get("/category/:id", authMiddleware,validate(categoryGetOne),categoryController.getOnecategory);
-router.put("/update-category/:id",authMiddleware,validate(categoryGetOne),validate(categoryUpdate),categoryController.updatecategory);
-router.delete("/category/:id",authMiddleware,validate(categoryRemove),categoryController.removecategory);
+router.post("/category-creates",validate(categoryCreate), categoryController.createCategory);
+router.get("/getall-category", authMiddleware,validate(categoryGetAll),categoryController.getAllCategory);
+router.get("/category/:id", authMiddleware,validate(categoryGetOne),categoryController.getOneCategory);
+router.put("/update-category/:id",authMiddleware,validate(categoryGetOne),validate(categoryUpdate),categoryController.updateCategory);
+router.delete("/category/:id",authMiddleware,validate(categoryRemove),categoryController.deleteCategory);
 
 module.exports = router;

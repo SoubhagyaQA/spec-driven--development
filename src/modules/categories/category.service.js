@@ -1,37 +1,101 @@
-const mongoose = require("mongoose");
-const Category = require("./category.model");
+// const mongoose = require("mongoose");
+// const Category = require("./category.model");
+
+// // Create Category
+// const createCategory = async (userId, data) => {
+//   try {
+//     const category = await Category.create({
+//       name: data.name,
+//       userId,
+//     });
+//     return category;
+//   } catch (error) {
+//     if (error.code === 11000) {
+//       throw new Error("Category already exists");
+//     }
+//     throw error;
+//   }
+// };
+
+// // Get All Categories
+// const getCategories = async (userId) => {
+//   return Category.find({ userId }).sort({ createdAt: -1 });
+// };
+
+// // Get Category by ID
+// const getCategoryById = async (userId, categoryId) => {
+//   if (!mongoose.Types.ObjectId.isValid(categoryId)) {
+//     throw new Error("Invalid category ID");
+//   }
+
+//   const category = await Category.findOne({
+//     _id: categoryId,
+//     userId,
+//   });
+
+//   if (!category) {
+//     throw new Error("Category not found");
+//   }
+
+//   return category;
+// };
+
+// // Update Category
+// const updateCategory = async (userId, categoryId, data) => {
+//   const category = await Category.findOneAndUpdate(
+//     { _id: categoryId, userId },
+//     { name: data.name },
+//     { new: true, runValidators: true }
+//   );
+//   if (!category) {
+//     throw new Error("Category not found");
+//   }
+//   return category;
+// };
+
+// // Delete Category
+// const deleteCategory = async (userId, categoryId) => {
+//   const category = await Category.findOneAndDelete({
+//     _id: categoryId,
+//     userId,
+//   });
+
+//   if (!category) {
+//     throw new Error("Category not found");
+//   }
+//   return true;
+// };
+
+// module.exports = {
+//   createCategory,
+//   getCategories,
+//   getCategoryById,
+//   updateCategory,
+//   deleteCategory,
+// };
+
+
+
+const repo = require("./category.repository");
 
 // Create Category
 const createCategory = async (userId, data) => {
-  try {
-    const category = await Category.create({
-      name: data.name,
-      userId,
-    });
-    return category;
-  } catch (error) {
-    if (error.code === 11000) {
-      throw new Error("Category already exists");
-    }
-    throw error;
-  }
+  const payload = {
+    ...data,
+    userId,
+  };
+
+  return repo.create(payload);
 };
 
 // Get All Categories
 const getCategories = async (userId) => {
-  return Category.find({ userId }).sort({ createdAt: -1 });
+  return repo.findAll(userId);
 };
 
-// Get Category by ID
-const getCategoryById = async (userId, categoryId) => {
-  if (!mongoose.Types.ObjectId.isValid(categoryId)) {
-    throw new Error("Invalid category ID");
-  }
-
-  const category = await Category.findOne({
-    _id: categoryId,
-    userId,
-  });
+// Get One Category
+const getCategoryById = async (userId, id) => {
+  const category = await repo.findById(id, userId);
 
   if (!category) {
     throw new Error("Category not found");
@@ -41,28 +105,24 @@ const getCategoryById = async (userId, categoryId) => {
 };
 
 // Update Category
-const updateCategory = async (userId, categoryId, data) => {
-  const category = await Category.findOneAndUpdate(
-    { _id: categoryId, userId },
-    { name: data.name },
-    { new: true, runValidators: true }
-  );
+const updateCategory = async (userId, id, data) => {
+  const category = await repo.update(id, userId, data);
+
   if (!category) {
     throw new Error("Category not found");
   }
+
   return category;
 };
 
 // Delete Category
-const deleteCategory = async (userId, categoryId) => {
-  const category = await Category.findOneAndDelete({
-    _id: categoryId,
-    userId,
-  });
+const deleteCategory = async (userId, id) => {
+  const category = await repo.remove(id, userId);
 
   if (!category) {
     throw new Error("Category not found");
   }
+
   return true;
 };
 
