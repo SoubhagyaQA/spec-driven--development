@@ -11,14 +11,12 @@ const categoryCreate = Joi.object({
       "string.max": "Category cannot exceed 50 characters",
     }),
 });
-
 // Get All (with optional pagination)
 const categoryGetAll = Joi.object({
   page: Joi.number().integer().min(1).default(1),
   limit: Joi.number().integer().min(1).max(100).default(10),
   search: Joi.string().trim().optional(),
 });
-
 // Validate ID param
 const categoryGetOne = Joi.object({
   id: Joi.string()
@@ -30,7 +28,6 @@ const categoryGetOne = Joi.object({
       "any.required": "Category ID is required",
     }),
 });
-
 // Update Category
 const categoryUpdate = Joi.object({
   name: Joi.string()
@@ -42,7 +39,6 @@ const categoryUpdate = Joi.object({
       "string.empty": "Category name is required",
     }),
 });
-
 //Delete Category
 const categoryRemove = Joi.object({
   id: Joi.string()

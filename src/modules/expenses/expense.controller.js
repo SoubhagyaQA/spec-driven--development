@@ -106,7 +106,6 @@ const MSG = require("../../utils/messages");
 const createExpenseController = async (req, res, next) => {
   try {
     const userId = req.user.id;
-
     const expense = await service.createExpense(userId, req.body);
 
     return successResponse(
@@ -119,7 +118,6 @@ const createExpenseController = async (req, res, next) => {
     next(err);
   }
 };
-
 // Get All Expenses
 const getAllExpensesController = async (req, res, next) => {
   try {
@@ -137,13 +135,11 @@ const getAllExpensesController = async (req, res, next) => {
     next(err);
   }
 };
-
 // Get Single Expense
 const getOneExpenseController = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { id } = req.params;
-
     const expense = await service.getExpenseById(userId, id);
 
     return successResponse(
@@ -156,7 +152,6 @@ const getOneExpenseController = async (req, res, next) => {
     next(err);
   }
 };
-
 // Update Expense
 const updateExpenseController = async (req, res, next) => {
   try {
@@ -179,7 +174,6 @@ const updateExpenseController = async (req, res, next) => {
     next(err);
   }
 };
-
 // Delete Expense
 const deleteExpenseController = async (req, res, next) => {
   try {
