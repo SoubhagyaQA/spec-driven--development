@@ -41,7 +41,7 @@ const updateExpense = Joi.object({
   amount: Joi.number().positive().optional(),
   categoryId: Joi.string().hex().length(24).optional(),
   date: Joi.date().max("now").optional(),
-  notes: Joi.string().trim().max(200).allow("", null).optional()}).min(1); // at least one field required
+  notes: Joi.string().trim().max(200).allow("", null).optional()}).min(1); 
 
 // Delete Expense
 const deleteExpense = Joi.object({
