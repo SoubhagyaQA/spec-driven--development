@@ -1,59 +1,36 @@
 const Joi = require("joi");
+
+// CREATE
 const categoryCreate = Joi.object({
-  name: Joi.string()
-    .trim()
-    .min(2)
-    .max(50)
-    .required()
-    .messages({
-      "string.empty": "Category name is required",
-      "string.min": "Category must be at least 2 characters",
-      "string.max": "Category cannot exceed 50 characters",
-    }),
+  name: Joi.string().trim().lowercase().min(2).max(50).required(),
 });
-// Get All (with optional pagination)
+
+// GET ALL
 const categoryGetAll = Joi.object({
   page: Joi.number().integer().min(1).default(1),
   limit: Joi.number().integer().min(1).max(100).default(10),
   search: Joi.string().trim().optional(),
 });
-// Validate ID param
-const categoryGetOne = Joi.object({
-  id: Joi.string()
-    .hex()
-    .length(24)
-    .required()
-    .messages({
-      "string.length": "Invalid category ID",
-      "any.required": "Category ID is required",
-    }),
+
+// PARAM ID
+const categoryId = Joi.object({
+  id: Joi.string().hex().length(24).required(),
 });
-// Update Category
+
+// UPDATE
 const categoryUpdate = Joi.object({
-  name: Joi.string()
-    .trim()
-    .min(2)
-    .max(50)
-    .required()
-    .messages({
-      "string.empty": "Category name is required",
-    }),
-});
-//Delete Category
+  name: Joi.string().trim().min(2).max(50).optional(),
+}).min(1);
+
+// DELETE
 const categoryRemove = Joi.object({
-  id: Joi.string()
-    .hex()
-    .length(24)
-    .required()
-    .messages({
-      "string.length": "Invalid category ID",
-    }),
+  id: Joi.string().hex().length(24).required(),
 });
 
 module.exports = {
   categoryCreate,
   categoryGetAll,
-  categoryGetOne,
+  categoryId,
   categoryUpdate,
   categoryRemove,
 };

@@ -6,12 +6,19 @@ const getMonthlySummary = async (userId, month, year) => {
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0, 23, 59, 59);
 
+  const match = {
+    date: { $gte: startDate, $lte: endDate },
+  };
+
+  if (userId) {
+    match.userId = new mongoose.Types.ObjectId(userId);
+  } else {
+    match.userId = null;
+  }
+
   return Expense.aggregate([
     {
-      $match: {
-        userId: new mongoose.Types.ObjectId(userId),
-        date: { $gte: startDate, $lte: endDate },
-      },
+      $match: match,
     },
     {
       $lookup: {
@@ -21,7 +28,7 @@ const getMonthlySummary = async (userId, month, year) => {
         as: "category",
       },
     },
-    { $unwind: "$category" },
+    { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
     {
       $group: {
         _id: "$category.name",
@@ -34,7 +41,7 @@ const getMonthlySummary = async (userId, month, year) => {
         totalSpend: { $sum: "$total" },
         categories: {
           $push: {
-            name: "$_id",
+            name: { $ifNull: ["$_id", "Uncategorized"] },
             total: "$total",
           },
         },
@@ -45,11 +52,16 @@ const getMonthlySummary = async (userId, month, year) => {
 
 // Trends (last 6 months)
 const getTrends = async (userId) => {
+  const match = {};
+  if (userId) {
+    match.userId = new mongoose.Types.ObjectId(userId);
+  } else {
+    match.userId = null;
+  }
+
   return Expense.aggregate([
     {
-      $match: {
-        userId: new mongoose.Types.ObjectId(userId),
-      },
+      $match: match,
     },
     {
       $group: {

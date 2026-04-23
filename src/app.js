@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const routes = require("../src/routes/central.routers");
+const routes = require("./routes/central.routers");
 const errorMiddleware = require("./middlewares/error.middleware");
 const loggerMiddleware = require("./middlewares/logger.middleware");
 const app = express();
@@ -10,14 +10,14 @@ app.use(express.json());
 
 app.use(loggerMiddleware);
 
-// Routes
+//Routes
 app.use("/api", routes);
 
-// Health check 
+//Health check 
 app.get("/", (req, res) => {
   res.send("API is running ");
 });
-// Global error handler
+//Global error handler
 app.use(errorMiddleware);
 
 module.exports = app;

@@ -26,11 +26,11 @@ Expense:
 
 ### Create Expense
 
-POST /expenses
+POST /create-expense (Public)
 
 ### Get All Expenses
 
-GET /expenses
+GET /get-expenses
 Query:
 
 * page
@@ -41,15 +41,15 @@ Query:
 
 ### Get One
 
-GET /expenses/:id
+GET /get-expense/:id
 
 ### Update
 
-PUT /expenses/:id
+PUT /update-expense/:id
 
 ### Delete
 
-DELETE /expenses/:id
+DELETE /delete-expense/:id
 
 ## 4. Validation Rules
 
@@ -63,7 +63,8 @@ DELETE /expenses/:id
 * Filter by category
 * Filter by date range
 * Apply pagination
-* Only user-specific data
+* Only user-specific data for protected routes
+* Public creation allows missing userId
 
 ## 6. Acceptance Criteria
 

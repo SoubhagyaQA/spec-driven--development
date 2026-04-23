@@ -6,8 +6,7 @@ const MSG = require("../../utils/messages");
 // Create
 const createCategory = async (req, res, next) => {
   try {
-    const userId = req.user.id;
-
+    const userId = req.user?.id;
     const category = await service.createCategory(userId, req.body);
 
     return successResponse(
@@ -25,7 +24,6 @@ const createCategory = async (req, res, next) => {
 const getAllCategory = async (req, res, next) => {
   try {
     const userId = req.user.id;
-
     const categories = await service.getCategories(userId);
 
     return successResponse(
@@ -44,7 +42,6 @@ const getOneCategory= async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { id } = req.params;
-
     const category = await service.getCategoryById(userId, id);
 
     return successResponse(

@@ -19,6 +19,7 @@ It works closely with the Auth module for authentication and authorization.
 * name: string (required, min 2, max 50)
 * email: string (required, unique, lowercase)
 * password: string (required, hashed)
+* phone: string (required, 10 digits)
 * createdAt: Date
 * updatedAt: Date
 
@@ -52,7 +53,8 @@ Authorization: Bearer token
   "data": {
     "_id": "123",
     "name": "John",
-    "email": "john@example.com"
+    "email": "john@example.com",
+    "phone": "9090374584"
   }
 }
 ```

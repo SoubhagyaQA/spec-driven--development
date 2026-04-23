@@ -23,7 +23,7 @@ The Category module allows users to create and manage expense categories
 
 * _id: ObjectId
 * name: string (required, min 2, max 50)
-* userId: ObjectId (reference to User, required)
+* userId: ObjectId (reference to User, optional)
 * isDefault: boolean (default: false)
 * createdAt: Date
 * updatedAt: Date
@@ -37,7 +37,7 @@ The Category module allows users to create and manage expense categories
 
 ### 5.1 Create Category
 
-**POST /categories**
+**POST /category-creates** (Public)
 
 #### Request Body:
 
@@ -64,7 +64,7 @@ json
 
 ### 5.2 Get All Categories
 
-**GET /categories**
+**GET /getall-category**
 
 #### Query Params:
 
@@ -81,7 +81,7 @@ json
 }
 ### 5.3 Get Category by ID
 
-**GET /categories/:id**
+**GET /category/:id**
 
 #### Response:
 json
@@ -99,7 +99,7 @@ json
 * 404 → Category not found
 ### 5.4 Update Category
 
-**PUT /categories/:id**
+**PUT /update-category/:id**
 
 #### Request Body:
 json
@@ -122,7 +122,7 @@ json
 
 ### 5.5 Delete Category
 
-**DELETE /categories/:id**
+**DELETE /category/:id**
 
 #### Response:
 
@@ -158,9 +158,10 @@ json
 
 ## 8. Security
 
-* All routes require JWT authentication
-* User ID is extracted from token
-* Data must be filtered by userId
+* Private routes require JWT authentication (GET, PUT, DELETE)
+* Create category is public
+* User ID is extracted from token (if provided)
+* Data must be filtered by userId (for private routes)
 ## 9. Acceptance Criteria
 
 * User can create category successfully

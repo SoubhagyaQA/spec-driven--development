@@ -1,10 +1,10 @@
 const repo = require("./auth.repository");
 const bcrypt = require("bcrypt");
-const jwt = require("../../utils/jwt");
+const jwtUtil = require("../../utils/jwt");
 
 // Register
 const register = async (data) => {
-  const { name, email, password } = data;
+  const { name, email, password, phone } = data;
 
   const existingUser = await repo.findByEmail(email);
   if (existingUser) {
@@ -17,9 +17,13 @@ const register = async (data) => {
     name,
     email,
     password: hashedPassword,
+    phone,
   });
 
-  return user;
+  const userObj = user.toObject();
+  delete userObj.password;
+
+  return userObj;
 };
 
 // Login
@@ -36,10 +40,13 @@ const login = async (data) => {
     throw new Error("Invalid credentials");
   }
 
-  const token = jwt.generateToken({ id: user._id });
+  const token = jwtUtil.generateToken(user);
+
+  const userObj = user.toObject();
+  delete userObj.password;
 
   return {
-    user,
+    user: userObj,
     token,
   };
 };

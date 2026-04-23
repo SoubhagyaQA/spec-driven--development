@@ -5,13 +5,17 @@ const validate = require("../../middlewares/validate.middleware");
 const {createExpense,getAllExpense,getOneExpense,updateExpense,deleteExpense} = require("./expense.validation");
 const router = express.Router();
 
-// Protect all routes
+// Public route: Create expense (we want to allow unauthenticated users to create expenses, but they will be associated with userId): null)
+router.post("/create-expense", validate(createExpense), expenseController.createExpenseController);
+
+// Protect all other routes
 router.use(authMiddleware);
 
-router.post("/create-expense",validate(createExpense), expenseController.createExpenseController);
-router.get("/get-expenses",authMiddleware, validate(getAllExpense), expenseController.getAllExpensesController);
-router.get("/get-expense/:id",authMiddleware, validate(getOneExpense), expenseController.getOneExpenseController);
-router.put("/update-expense/:id", authMiddleware, validate(updateExpense), expenseController.updateExpenseController);
-router.delete("/delete-expense/:id", authMiddleware, validate(deleteExpense), expenseController.deleteExpenseController);
+router.get("/get-expenses", validate(getAllExpense, "query"), expenseController.getAllExpensesController);
+router.get("/get-expense/:id", validate(getOneExpense, "params"), expenseController.getOneExpenseController);
+router.put("/update-expense/:id", validate(updateExpense, "params"), expenseController.updateExpenseController);
+router.delete("/delete-expense/:id", validate(deleteExpense, "params"), expenseController.deleteExpenseController);
+
+// If there were any other protected routes, we would add router.use(authMiddleware) here
 
 module.exports = router;

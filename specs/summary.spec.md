@@ -25,7 +25,7 @@ It aggregates data from:
 
 ### 4.1 Monthly Summary
 
-**GET /summary/monthly**
+**GET /monthly-summary** (Public)
 
 #### Query Params:
 
@@ -54,7 +54,7 @@ json id="7sj51r"
 
 ### 4.2 Expense Trends
 
-**GET /summary/trends**
+**GET /trends** (Public)
 
 #### Description:
 
@@ -137,9 +137,9 @@ Returns last 6 months of expense data.
 
 ## 8. Security
 
-* All routes require JWT authentication
-* userId is extracted from token
-* Only user-specific data is returned
+* All routes are public
+* userId is extracted from token (if provided)
+* Summary includes user-specific data or public data
 
 ## 9. Acceptance Criteria
 

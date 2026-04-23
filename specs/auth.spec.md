@@ -49,7 +49,8 @@ Uses the **User model**:
 {
   "name": "John",
   "email": "john@example.com",
-  "password": "123456"
+  "password": "123456",
+  "phone": "9090374584"
 }
 ```
 
@@ -58,11 +59,13 @@ Uses the **User model**:
 ```json id="c9r92m"
 {
   "success": true,
-  "message": "User registered successfully",
+  "statusCode": 201,
+  "message": "Created successfully",
   "data": {
     "_id": "123",
     "name": "John",
-    "email": "john@example.com"
+    "email": "john@example.com",
+    "phone": "9090374584"
   }
 }
 ```

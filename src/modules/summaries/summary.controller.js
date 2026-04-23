@@ -6,7 +6,7 @@ const MSG = require("../../utils/messages");
 // Monthly Summary
 const monthlySummary = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const data = await service.getMonthlySummary(
       userId,
       req.query
@@ -26,7 +26,7 @@ const monthlySummary = async (req, res, next) => {
 // Trends
 const trends = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const data = await service.getTrends(userId);
 
     return successResponse(
