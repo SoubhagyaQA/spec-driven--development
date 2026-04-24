@@ -22,7 +22,7 @@ const categoryUpdate = Joi.object({
   name: Joi.string().trim().min(2).max(50).optional(),
 }).min(1);
 
-// DELETE
+  
 const categoryRemove = Joi.object({
   id: Joi.string().hex().length(24).required(),
 });

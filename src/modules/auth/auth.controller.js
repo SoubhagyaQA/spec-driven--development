@@ -25,7 +25,7 @@ const loginController = async (req, res, next) => {
     const data = await service.login(req.body);
 
     return successResponse(
-      res,
+      res,  
       data,
       MSG.SUCCESS.FETCHED,
       STATUS.OK
