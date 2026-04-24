@@ -6,6 +6,7 @@ const summarySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true,
     },
     month: Number,
     year: Number,
@@ -13,5 +14,7 @@ const summarySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+summarySchema.index({ userId: 1, year: 1, month: 1 }, { unique: true });
 
 module.exports = mongoose.model("Summary", summarySchema);
